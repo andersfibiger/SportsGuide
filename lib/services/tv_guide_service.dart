@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
-import 'package:SportsGuide/models/channel.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import '../models/channel.dart';
+import '../models/day_view.dart';
 
 class TvGuideService {
   String _baseUrl; 
@@ -20,4 +20,10 @@ class TvGuideService {
     return Channel.fromJson(jsonDecode(response.body)['channel']);
   }
 
+  Future<List<DayView>> getTvGuideByDate(DateTime date) async {
+    var response = await http.get('$_baseUrl/epg/dayviews/${_formatDate(date)}?ch=1'); // TODO use all channels
+    return (jsonDecode(response.body) as List).map((e) => DayView.fromJson(e)).toList(); 
+  }
+
+  String _formatDate(DateTime date) => '${date.year}-${date.month}-${date.day}';
 }
