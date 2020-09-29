@@ -4,7 +4,13 @@ import 'package:http/http.dart' as http;
 import '../models/channel.dart';
 import '../models/day_view.dart';
 
-class TvGuideService {
+abstract class ITvGuideService {
+  Future<List<Channel>> getChannels();
+  Future<Channel> getChannelById(String id);
+  Future<List<DayView>> getTvGuideByDate(DateTime date);
+}
+
+class TvGuideService implements ITvGuideService {
   String _baseUrl; 
 
   TvGuideService()
@@ -21,7 +27,7 @@ class TvGuideService {
   }
 
   Future<List<DayView>> getTvGuideByDate(DateTime date) async {
-    var response = await http.get('$_baseUrl/epg/dayviews/${_formatDate(date)}?ch=1'); // TODO use all channels
+    var response = await http.get('$_baseUrl/epg/dayviews/${_formatDate(date)}?ch=10066'); // TODO use all channels
     return (jsonDecode(response.body) as List).map((e) => DayView.fromJson(e)).toList(); 
   }
 
