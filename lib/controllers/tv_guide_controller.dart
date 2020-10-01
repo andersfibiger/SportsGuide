@@ -11,8 +11,9 @@ class TvGuideController implements ITvGuideController {
   @override
   Future<List<Program>> getFootballMatchesToday() async {
     var dayviews = await _tvGuideService.getTvGuideByDate(DateTime.now());
-    var programs = dayviews.first.programs.where((program) => program.categories.contains('Sport')).toList();
-    return programs ?? List<Program>();
+    var programs = dayviews.map((x) => x.programs.where((program) => program.categories.contains('Sport')));
+    var allPrograms = programs.fold<List<Program>>([], (prev, elements) => [...prev, ...elements]).toList();
+    return allPrograms ?? List<Program>();
   }
   
 

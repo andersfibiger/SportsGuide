@@ -25,6 +25,12 @@ class TvGuide extends StatelessWidget {
             case ConnectionState.waiting:
               return Center(child: Text('Loading...'));
             default:
+              if (snapshot.data.isEmpty) {
+                return Center(
+                  child: Text('No sport today on chosen channels'),
+                );
+              }
+
               return Material(
                 child: ListView.builder(
                   itemCount: snapshot.data.length,
