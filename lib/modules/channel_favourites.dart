@@ -7,6 +7,8 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 class ChannelFavourites extends StatelessWidget {
+  const ChannelFavourites();
+
   Future<List<Channel>> _getChannels() async {
     final tvGuideService = GetIt.I<ITvGuideService>();
     return await tvGuideService.getChannels();
