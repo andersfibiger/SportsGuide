@@ -26,23 +26,41 @@ class ChannelFavourites extends StatelessWidget {
               snapshot.connectionState == ConnectionState.waiting)
             return SizedBox.shrink();
 
-          return ListView.builder(
-            itemCount: snapshot.data.length,
-            itemBuilder: (context, index) {
-              final channel = snapshot.data[index];
-              return CheckboxListTile(
-                title: Text(channel.title),
-                secondary: Image.network(
-                  channel.logo,
-                  height: 40,
-                  width: 40,
+          return Column(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height - 250,
+                child: ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) {
+                    final channel = snapshot.data[index];
+                    return CheckboxListTile(
+                      title: Text(channel.title),
+                      secondary: Image.network(
+                        channel.logo,
+                        height: 40,
+                        width: 40,
+                      ),
+                      onChanged: (_) => context
+                          .read<Channels>()
+                          .updateChannelsById(channel.id),
+                      value: context
+                          .watch<Channels>()
+                          .channelIds
+                          .contains(channel.id),
+                    );
+                  },
                 ),
-                onChanged: (_) =>
-                    context.read<Channels>().updateChannelsById(channel.id),
-                value:
-                    context.watch<Channels>().channelIds.contains(channel.id),
-              );
-            },
+              ),
+              Container(
+                child: RaisedButton(
+                  onPressed: () async {
+                    await context.read<Channels>().saveFavourites();
+                  },
+                  child: Text('Save favourites'),
+                ),
+              ),
+            ],
           );
         },
       ),
