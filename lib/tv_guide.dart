@@ -1,13 +1,14 @@
 import 'package:SportsGuide/controllers/tv_guide_controller.dart';
 import 'package:SportsGuide/models/program.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class TvGuide extends StatelessWidget {
   const TvGuide();
 
   Future<List<Program>> _getTvGuide() async {
     await Future.delayed(Duration(seconds: 2));
-    return await TvGuideController().getFootballMatchesToday();
+    return await GetIt.I<ITvGuideController>().getFootballMatchesToday();
   }
 
   String _parseMinute(int minute) => minute < 10 ? '0$minute' : '$minute';

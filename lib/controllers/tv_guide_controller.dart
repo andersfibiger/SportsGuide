@@ -1,3 +1,5 @@
+import 'package:get_it/get_it.dart';
+
 import '../models/program.dart';
 import '../services/tv_guide_service.dart';
 
@@ -6,7 +8,7 @@ abstract class ITvGuideController {
 } 
 
 class TvGuideController implements ITvGuideController {
-  ITvGuideService _tvGuideService = TvGuideService();
+  final _tvGuideService = GetIt.I<ITvGuideService>();
   
   @override
   Future<List<Program>> getFootballMatchesToday() async {
