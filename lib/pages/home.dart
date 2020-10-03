@@ -16,7 +16,7 @@ class _HomeState extends State<Home> {
     });
   }
 
-  static const _widgets = <Widget>[
+  static final _widgets = <Widget>[
     TvGuide(),
     ChannelFavourites(),
   ];

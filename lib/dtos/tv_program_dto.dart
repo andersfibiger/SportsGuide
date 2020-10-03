@@ -1,9 +1,10 @@
-
-import 'package:SportsGuide/models/program.dart';
-
-class TvProgramDto {
-  List<Program> programs;
-  String channelLogo;
+class TvProgramDto  {
+  final String id;
+  final DateTime startTime;
+  final DateTime endTime;
+  final List<String> categories;
+  final String title;
+  final String channelId;
   
-  TvProgramDto(this.channelLogo, this.programs);
+  const TvProgramDto(this.categories,this.endTime,this.id,this.startTime,this.title, this.channelId);
 }
