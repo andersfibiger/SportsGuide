@@ -1,4 +1,5 @@
 import 'package:SportsGuide/change_notifiers/channels.dart';
+import 'package:SportsGuide/change_notifiers/tv_guide_notifier.dart';
 import 'package:SportsGuide/util/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -12,6 +13,7 @@ Future main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Channels()),
+        ChangeNotifierProvider(create: (_) => TvGuideNotifier()),
       ],
       child: MyApp(),
     ),

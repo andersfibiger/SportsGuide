@@ -1,9 +1,11 @@
 class Program {
-  String id;
-  DateTime startTime;
-  DateTime endTime;
-  List<String> categories;
-  String title;
+  final String id;
+  final DateTime startTime;
+  final DateTime endTime;
+  final List<String> categories;
+  final String title;
+
+  const Program(this.categories,this.endTime,this.id,this.startTime,this.title);
 
   Program.fromJson(Map<String, dynamic> json) :
     id = json['id'],

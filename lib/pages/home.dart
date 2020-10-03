@@ -1,5 +1,5 @@
 import 'package:SportsGuide/pages/channel_favourites.dart';
-import 'package:SportsGuide/pages/tv_guide.dart';
+import 'package:SportsGuide/pages/tv_guide/tv_guide.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
