@@ -36,9 +36,12 @@ class DatePicker extends StatelessWidget {
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
-            borderSide: BorderSide(color: Theme.of(context).accentColor)
+            borderSide: BorderSide(color: Theme.of(context).accentColor, width: 2.0)
           ),
-          icon: Icon(Icons.today),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          ),
+          icon: Icon(Icons.today, color: Theme.of(context).accentColor),
         ),
       ),
     );
