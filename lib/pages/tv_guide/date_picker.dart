@@ -34,8 +34,9 @@ class DatePicker extends StatelessWidget {
         ),
         textAlign: TextAlign.center,
         decoration: InputDecoration(
-          border: OutlineInputBorder(
+          enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            borderSide: BorderSide(color: Theme.of(context).accentColor)
           ),
           icon: Icon(Icons.today),
         ),
