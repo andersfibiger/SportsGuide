@@ -1,5 +1,6 @@
 import 'package:SportsGuide/models/channel.dart';
 import 'package:SportsGuide/services/tv_guide_service.dart';
+import 'package:SportsGuide/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,12 +43,12 @@ class Channels extends ChangeNotifier {
   Future saveFavourites() async {
     final prefs = await SharedPreferences.getInstance();
     final channelIds = _savedChannels.map((e) => e.id).toList();
-    await prefs.setStringList('channels', channelIds);
+    await prefs.setStringList(Constants.PREFS_CHANNELS, channelIds);
   }
 
   Future _fetchFavourites() async {
     final prefs = await SharedPreferences.getInstance();
-    final channelIds = prefs.getStringList('channels') ?? [];
+    final channelIds = prefs.getStringList(Constants.PREFS_CHANNELS) ?? [];
     if (channelIds.isNotEmpty) {
       final tvGuideService = GetIt.I<ITvGuideService>();
       final mapped =

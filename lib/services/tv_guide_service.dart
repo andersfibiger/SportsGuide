@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:SportsGuide/util/constants.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,7 +38,7 @@ class TvGuideService implements ITvGuideService {
 
   Future<String>  _getChannels() async {
     final prefs = await SharedPreferences.getInstance();
-    final channelIds = prefs.getStringList('channels');
+    final channelIds = prefs.getStringList(Constants.PREFS_CHANNELS);
 
     if (channelIds == null) {
       return '?ch=1';
