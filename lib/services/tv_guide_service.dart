@@ -40,7 +40,7 @@ class TvGuideService implements ITvGuideService {
     final prefs = await SharedPreferences.getInstance();
     final channelIds = prefs.getStringList(Constants.PREFS_CHANNELS);
 
-    if (channelIds == null) {
+    if (channelIds == null || channelIds.isEmpty) {
       return '?ch=1';
     }
 
