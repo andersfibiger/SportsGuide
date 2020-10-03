@@ -13,4 +13,12 @@ class Program {
     endTime = DateTime.fromMillisecondsSinceEpoch((json['stop'] as int) * 1000),
     startTime = DateTime.fromMillisecondsSinceEpoch((json['start'] as int) * 1000),
     categories = json['categories'].cast<String>();
+
+  @override
+  bool operator ==(other) {
+    return this.id == other.id;
+  }
+
+  @override
+  int get hashCode => this.id.hashCode;
 }

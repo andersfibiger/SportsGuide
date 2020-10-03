@@ -13,4 +13,12 @@ class Channel {
     logo = json['logo'],
     svgLogo = json['svgLogo'],
     sort = json['sort'];
+
+  @override
+  bool operator ==(other) {
+    return this.id == other.id;
+  }
+
+  @override
+  int get hashCode => this.id.hashCode;
 }

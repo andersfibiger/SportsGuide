@@ -9,5 +9,13 @@ class DayView {
   DayView.fromJson(Map<String, dynamic> json) :
     channelId = json['id'],
     programs = (json['programs'] as List).map((e) => Program.fromJson(e)).toList();
+
+  @override
+  bool operator ==(other) {
+    return this.channelId == other.channelId;
+  }
+
+  @override
+  int get hashCode => this.channelId.hashCode;
 }
 
