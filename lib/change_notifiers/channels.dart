@@ -1,37 +1,60 @@
+import 'package:SportsGuide/models/channel.dart';
+import 'package:SportsGuide/services/tv_guide_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Channels extends ChangeNotifier {
-  List<String> _channelIds = [];
-  List<String> get channelIds => _channelIds;
+  List<Channel> _savedChannels = [];
+  List<Channel> get savedChannels => _savedChannels;
+  List<Channel> _channels = [];
+  List<Channel> get channels => _channels;
 
   Channels() {
-    fetchFavourites();
+    _getChannels();
+    _fetchFavourites();
   }
 
-  void updateChannelsById(String id) {
-    if (_channelIds.contains(id)) {
-      _channelIds.remove(id);
+  void updateSavedChannels(Channel channel) {
+    if (_savedChannels.contains(channel)) {
+      _savedChannels.remove(channel);
     } else {
-      _channelIds.add(id);
+      _savedChannels.add(channel);
     }
 
     notifyListeners();
   }
 
-  void clearChannelIds() {
-    _channelIds.clear();
+  void filterChannels(String query) async {
+    final tvGuideService = GetIt.I<ITvGuideService>();
+    _channels = await tvGuideService.getChannels();
+    _channels.removeWhere((channel) =>
+        channel.title.toLowerCase().indexOf(query.toLowerCase()) == -1);
+    notifyListeners();
+  }
+
+  Future<void> _getChannels() async {
+    final tvGuideService = GetIt.I<ITvGuideService>();
+    _channels = await tvGuideService.getChannels();
     notifyListeners();
   }
 
   Future saveFavourites() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList('channels', _channelIds);
+    final channelIds = _savedChannels.map((e) => e.id).toList();
+    await prefs.setStringList('channels', channelIds);
   }
 
-  Future fetchFavourites() async {
+  Future _fetchFavourites() async {
     final prefs = await SharedPreferences.getInstance();
-    _channelIds = prefs.getStringList('channels') ?? [];
+    final channelIds = prefs.getStringList('channels') ?? [];
+    if (channelIds.isNotEmpty) {
+      final tvGuideService = GetIt.I<ITvGuideService>();
+      final mapped =
+          channelIds.map((id) => tvGuideService.getChannelById(id)).toList();
+      _savedChannels = await Future.wait(mapped);
+    }
+
     notifyListeners();
   }
 }
