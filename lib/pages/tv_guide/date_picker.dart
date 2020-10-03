@@ -1,4 +1,4 @@
-import 'package:SportsGuide/change_notifiers/channels.dart';
+import 'package:SportsGuide/change_notifiers/channels_notifier.dart';
 import 'package:SportsGuide/change_notifiers/tv_guide_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

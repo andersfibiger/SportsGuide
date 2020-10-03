@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:SportsGuide/change_notifiers/channels.dart';
+import 'package:SportsGuide/change_notifiers/channels_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +15,7 @@ class ChannelFavourites extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               onChanged: (query) =>
-                  context.read<Channels>().filterChannels(query),
+                  context.read<ChannelsNotifier>().filterChannels(query),
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -27,9 +27,9 @@ class ChannelFavourites extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: context.watch<Channels>().channels.length,
+              itemCount: context.watch<ChannelsNotifier>().channels.length,
               itemBuilder: (context, index) {
-                final channel = context.read<Channels>().channels[index];
+                final channel = context.read<ChannelsNotifier>().channels[index];
                 return CheckboxListTile(
                   title: Text(channel.title),
                   secondary: Image.network(
@@ -38,9 +38,9 @@ class ChannelFavourites extends StatelessWidget {
                     width: 40,
                   ),
                   onChanged: (_) =>
-                      context.read<Channels>().updateSavedChannels(channel),
+                      context.read<ChannelsNotifier>().updateSavedChannels(channel),
                   value: context
-                      .watch<Channels>()
+                      .watch<ChannelsNotifier>()
                       .savedChannels
                       .where((c) => c.id == channel.id)
                       .isNotEmpty,
@@ -51,7 +51,7 @@ class ChannelFavourites extends StatelessWidget {
           SizedBox(height: 20),
           RaisedButton(
             onPressed: () async {
-              await context.read<Channels>().saveFavourites();
+              await context.read<ChannelsNotifier>().saveFavourites();
               Scaffold.of(context)
                   .showSnackBar(SnackBar(content: Text('Saved')));
             },
