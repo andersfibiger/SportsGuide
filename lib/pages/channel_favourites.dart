@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:SportsGuide/controllers/channel_controller.dart';
+import 'package:SportsGuide/change_notifiers/channels.dart';
 import 'package:SportsGuide/models/channel.dart';
 import 'package:SportsGuide/services/tv_guide_service.dart';
 import 'package:flutter/material.dart';

@@ -1,12 +1,9 @@
-import 'package:SportsGuide/controllers/channel_controller.dart';
-import 'package:SportsGuide/get_it.dart';
-import 'package:SportsGuide/modules/channel_favourites.dart';
-import 'package:SportsGuide/tv_guide.dart';
+import 'package:SportsGuide/change_notifiers/channels.dart';
+import 'package:SportsGuide/util/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-
-import 'modules/home.dart';
+import 'pages/home.dart';
 
 Future main() async {
   await DotEnv().load('.env');
