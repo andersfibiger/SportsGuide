@@ -28,8 +28,7 @@ class ChannelFavourites extends StatelessWidget {
 
           return Column(
             children: [
-              Container(
-                height: MediaQuery.of(context).size.height - 250,
+              Expanded(
                 child: ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
@@ -52,14 +51,17 @@ class ChannelFavourites extends StatelessWidget {
                   },
                 ),
               ),
-              Container(
-                child: RaisedButton(
-                  onPressed: () async {
-                    await context.read<Channels>().saveFavourites();
-                  },
-                  child: Text('Save favourites'),
-                ),
+              SizedBox(height: 20),
+              RaisedButton(
+                onPressed: () async {
+                  await context.read<Channels>().saveFavourites();
+                  Scaffold.of(context).showSnackBar(SnackBar(content: Text('Saved')));
+                },
+                color: Theme.of(context).accentColor,
+                child: Text('Save channels'),
+                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
               ),
+              SizedBox(height: 20),
             ],
           );
         },
