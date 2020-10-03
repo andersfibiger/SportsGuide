@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Channels extends ChangeNotifier {
+class ChannelsNotifier extends ChangeNotifier {
   List<Channel> _savedChannels = [];
   List<Channel> get savedChannels => _savedChannels;
   List<Channel> _channels = [];
   List<Channel> get channels => _channels;
 
-  Channels() {
+  ChannelsNotifier() {
     _getChannels();
     _fetchFavourites();
   }
