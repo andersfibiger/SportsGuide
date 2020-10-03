@@ -35,6 +35,8 @@ class TvGuide extends StatelessWidget {
                   subtitle: Text(_getProgramTime(program)),
                   leading: Image.network(
                     '$_logoBaseUrl/${program.channelId}.png',
+                    height: 100,
+                    width: 50,
                   ),
                 );
               },
