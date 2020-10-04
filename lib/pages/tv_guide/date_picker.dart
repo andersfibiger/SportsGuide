@@ -1,4 +1,3 @@
-import 'package:SportsGuide/change_notifiers/channels_notifier.dart';
 import 'package:SportsGuide/change_notifiers/tv_guide_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +23,6 @@ class DatePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('building datepicker');
     return Container(
       child: TextField(
         readOnly: true,

@@ -12,13 +12,13 @@ class TvGuideNotifier with ChangeNotifier {
   bool _showSports = false;
 
   TvGuideNotifier() {
-    fetchSportsFromDate();
+    fetchAllSports();
   }
 
   DateTime get selectedDate => _selectedDate;
   Future<void> updateDate(DateTime date) async {
     _selectedDate = date;
-    await fetchSportsFromDate();
+    await fetchAllSports();
   }
 
   List<TvProgramDto> get programs => _programs;
@@ -27,40 +27,43 @@ class TvGuideNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchSportsFromDate() async {
-    var dayviews = await _tvGuideService.getTvGuideByDate(_selectedDate);
-    var programs = dayviews.map((channel) {
-      return channel.programs
-          .where((program) => program.categories.contains('Sport'))
-          .map((x) => TvProgramDto(x.categories, x.endTime, x.id, x.startTime,
-              x.title, channel.channelId));
-    });
-    var allPrograms = programs.fold<List<TvProgramDto>>(
-        [], (prev, elements) => [...prev, ...elements]).toList();
+  Future<void> fetchAllSports() async {
+    final programs = await _fetchAllSportsByChosenDate();
+    setPrograms(programs);
+  }
 
-    setPrograms(allPrograms);
+  Future<List<TvProgramDto>> _fetchAllSportsByChosenDate() async {
+    final dayviews = await _tvGuideService.getTvGuideByDate(_selectedDate);
+    final programs = dayviews.map((channel) => channel.programs
+        .where((program) => program.categories.contains('Sport'))
+        .map((x) => TvProgramDto(x.categories, x.endTime, x.id, x.startTime,
+            x.title, channel.channelId)));
+
+    return programs.fold<List<TvProgramDto>>(
+        [], (prev, elements) => [...prev, ...elements]).toList();
   }
 
   bool get showSports => _showSports;
   void updateShowSport(bool value) {
     _showSports = value;
-    _fetchSports();
+    fetchChosenSports();
   }
 
-  Future<void> _fetchSports() async {
+  Future<void> fetchChosenSports() async {
     if (!_showSports) {
-      await fetchSportsFromDate();
+      await fetchAllSports();
       return;
     }
 
     final prefs = await SharedPreferences.getInstance();
-    final sports = prefs.getStringList(Constants.PREFS_SPORTS) ?? [];
-    if (sports.isEmpty) {
+    final chosenSports = prefs.getStringList(Constants.PREFS_SPORTS) ?? [];
+    if (chosenSports.isEmpty) {
       return;
     }
 
-    final filteredPrograms = sports.map((sport) {
-      return _programs.where((program) {
+    final programs = await _fetchAllSportsByChosenDate();
+    final filteredPrograms = chosenSports.map((sport) {
+      return programs.where((program) {
         return program.title.toLowerCase().indexOf(sport.toLowerCase()) != -1;
       });
     });

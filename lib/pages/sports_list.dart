@@ -1,17 +1,25 @@
 import 'package:SportsGuide/change_notifiers/sports_notifier.dart';
+import 'package:SportsGuide/change_notifiers/tv_guide_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SportsList extends StatelessWidget {
   final _textController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
-  void _onAddSport(BuildContext context, String sport) {
-    if (sport.isEmpty) {
+  Future<void> _onAddSport(BuildContext context, String sport) async {
+    if (!_formKey.currentState.validate()) {
       return;
     }
 
     context.read<SportsNotifier>().addSport(sport);
-    _textController.clear();
+    _formKey.currentState.reset();
+    await context.read<TvGuideNotifier>().fetchChosenSports();
+  }
+
+  Future<void> _onRemoveSport(BuildContext context, String sport) async {
+    context.read<SportsNotifier>().removeSport(sport);
+    await context.read<TvGuideNotifier>().fetchChosenSports();
   }
 
   @override
@@ -23,11 +31,25 @@ class SportsList extends StatelessWidget {
         children: [
           Text('Add sport to filter for', style: TextStyle(fontSize: 20)),
           SizedBox(height: 10.0),
-          TextField(
-            controller: _textController,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          Form(
+            key: _formKey,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            child: TextFormField(
+              controller: _textController,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Enter a sport';
+                }
+                if (context.read<SportsNotifier>().sports.contains(value)) {
+                  return 'Already added';
+                }
+
+                return null;
+              },
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                ),
               ),
             ),
           ),
@@ -40,8 +62,7 @@ class SportsList extends StatelessWidget {
                   title: Text(sport),
                   trailing: IconButton(
                     icon: Icon(Icons.delete),
-                    onPressed: () =>
-                        context.read<SportsNotifier>().removeSport(sport),
+                    onPressed: () async => await _onRemoveSport(context, sport),
                   ),
                 );
               },
@@ -49,7 +70,8 @@ class SportsList extends StatelessWidget {
           ),
           Center(
             child: RaisedButton(
-              onPressed: () => _onAddSport(context, _textController.text),
+              onPressed: () async =>
+                  await _onAddSport(context, _textController.text),
               child: Text('Add sport'),
               padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
               color: Theme.of(context).accentColor,

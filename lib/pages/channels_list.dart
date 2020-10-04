@@ -55,7 +55,8 @@ class ChannelsList extends StatelessWidget {
           RaisedButton(
             onPressed: () async {
               await context.read<ChannelsNotifier>().saveFavourites();
-              await context.read<TvGuideNotifier>().fetchSportsFromDate();
+              await context.read<TvGuideNotifier>().fetchAllSports();
+              // TODO fetch chosen or all sports
               Scaffold.of(context)
                   .showSnackBar(SnackBar(content: Text('Saved')));
             },
