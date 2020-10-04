@@ -5,12 +5,13 @@ import 'package:provider/provider.dart';
 class SportsList extends StatelessWidget {
   final _textController = TextEditingController();
 
-  void _addSport(BuildContext context, String sport) {
+  void _onAddSport(BuildContext context, String sport) {
     if (sport.isEmpty) {
       return;
     }
 
     context.read<SportsNotifier>().addSport(sport);
+    _textController.clear();
   }
 
   @override
@@ -48,7 +49,7 @@ class SportsList extends StatelessWidget {
           ),
           Center(
             child: RaisedButton(
-              onPressed: () => _addSport(context, _textController.text),
+              onPressed: () => _onAddSport(context, _textController.text),
               child: Text('Add sport'),
               padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
               color: Theme.of(context).accentColor,

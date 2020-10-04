@@ -11,12 +11,18 @@ class SportsNotifier with ChangeNotifier {
   }
 
   void removeSport(String sport) async {
-    _sports.remove(sport);
+    if (!_sports.remove(sport)) {
+      return;
+    }
+
     await saveSports();
     notifyListeners();
   }
 
   void addSport(String sport) async {
+    if (_sports.contains(sport)) {
+      return;
+    }
     _sports.add(sport);
     await saveSports();
     notifyListeners();
