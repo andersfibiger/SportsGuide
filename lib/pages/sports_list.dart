@@ -53,17 +53,23 @@ class SportsList extends StatelessWidget {
               ),
             ),
           ),
+          Divider(),
           Expanded(
             child: ListView.builder(
               itemCount: context.watch<SportsNotifier>().sports.length,
               itemBuilder: (context, index) {
                 final sport = context.read<SportsNotifier>().sports[index];
-                return ListTile(
-                  title: Text(sport),
-                  trailing: IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () async => await _onRemoveSport(context, sport),
-                  ),
+                return Column(
+                  children: [
+                    ListTile(
+                      title: Text(sport),
+                      trailing: IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () async => await _onRemoveSport(context, sport),
+                      ),
+                    ),
+                    Divider(),
+                  ],
                 );
               },
             ),

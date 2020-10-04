@@ -17,6 +17,12 @@ class _HomeState extends State<Home> {
     });
   }
 
+  final _titles = <String>[
+    'Upcoming sports',
+    'Channels',
+    'Sports'
+  ];
+
   static final _widgets = <Widget>[
     TvGuideList(),
     ChannelsList(),
@@ -27,14 +33,14 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sports guide'),
+        title: Text(_titles.elementAt(_currentIndex)),
       ),
       body: _widgets.elementAt(_currentIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.tv),
-            label: 'Guide',
+            label: 'Programs',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.tv),

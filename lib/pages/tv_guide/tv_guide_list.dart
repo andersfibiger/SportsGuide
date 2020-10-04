@@ -34,20 +34,26 @@ class TvGuideList extends StatelessWidget {
               ],
             ),
           ),
+          Divider(),
           Expanded(
             child: ListView.builder(
               shrinkWrap: true,
               itemCount: context.watch<TvGuideNotifier>().programs.length,
               itemBuilder: (context, index) {
                 final program = context.read<TvGuideNotifier>().programs[index];
-                return ListTile(
-                  title: Text(program.title),
-                  subtitle: Text(_getProgramTime(program)),
-                  leading: Image.network(
-                    '$_logoBaseUrl/${program.channelId}.png',
-                    height: 100,
-                    width: 50,
-                  ),
+                return Column(
+                  children: [
+                    ListTile(
+                      title: Text(program.title),
+                      subtitle: Text(_getProgramTime(program)),
+                      leading: Image.network(
+                        '$_logoBaseUrl/${program.channelId}.png',
+                        height: 100,
+                        width: 50,
+                      ),
+                    ),
+                    Divider()
+                  ],
                 );
               },
             ),

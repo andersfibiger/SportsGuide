@@ -26,27 +26,33 @@ class ChannelsList extends StatelessWidget {
               ),
             ),
           ),
+          Divider(),
           Expanded(
             child: ListView.builder(
               itemCount: context.watch<ChannelsNotifier>().channels.length,
               itemBuilder: (context, index) {
                 final channel =
                     context.read<ChannelsNotifier>().channels[index];
-                return CheckboxListTile(
-                  title: Text(channel.title),
-                  secondary: Image.network(
-                    channel.logo,
-                    height: 40,
-                    width: 40,
-                  ),
-                  onChanged: (_) => context
-                      .read<ChannelsNotifier>()
-                      .updateSavedChannels(channel),
-                  value: context
-                      .watch<ChannelsNotifier>()
-                      .savedChannels
-                      .where((c) => c.id == channel.id)
-                      .isNotEmpty,
+                return Column(
+                  children: [
+                    CheckboxListTile(
+                      title: Text(channel.title),
+                      secondary: Image.network(
+                        channel.logo,
+                        height: 40,
+                        width: 40,
+                      ),
+                      onChanged: (_) => context
+                          .read<ChannelsNotifier>()
+                          .updateSavedChannels(channel),
+                      value: context
+                          .watch<ChannelsNotifier>()
+                          .savedChannels
+                          .where((c) => c.id == channel.id)
+                          .isNotEmpty,
+                    ),
+                    Divider(),
+                  ],
                 );
               },
             ),
