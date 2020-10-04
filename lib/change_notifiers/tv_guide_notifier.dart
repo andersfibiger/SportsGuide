@@ -1,19 +1,22 @@
 import 'package:SportsGuide/dtos/tv_program_dto.dart';
+import 'package:SportsGuide/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../services/tv_guide_service.dart';
 
 class TvGuideNotifier with ChangeNotifier {
   final _tvGuideService = GetIt.I<ITvGuideService>();
   DateTime _selectedDate = DateTime.now();
   List<TvProgramDto> _programs = [];
+  bool _showSports = false;
 
   TvGuideNotifier() {
     fetchSportsFromDate();
   }
 
   DateTime get selectedDate => _selectedDate;
-  Future<void> updateDate(DateTime date) async  {
+  Future<void> updateDate(DateTime date) async {
     _selectedDate = date;
     await fetchSportsFromDate();
   }
@@ -27,11 +30,42 @@ class TvGuideNotifier with ChangeNotifier {
   Future<void> fetchSportsFromDate() async {
     var dayviews = await _tvGuideService.getTvGuideByDate(_selectedDate);
     var programs = dayviews.map((channel) {
-      return channel.programs.where((program) => program.categories.contains('Sport'))
-        .map((x) => TvProgramDto(x.categories, x.endTime, x.id, x.startTime, x.title, channel.channelId));
+      return channel.programs
+          .where((program) => program.categories.contains('Sport'))
+          .map((x) => TvProgramDto(x.categories, x.endTime, x.id, x.startTime,
+              x.title, channel.channelId));
     });
-    var allPrograms = programs.fold<List<TvProgramDto>>([], (prev, elements) => [...prev, ...elements]).toList();
-    
+    var allPrograms = programs.fold<List<TvProgramDto>>(
+        [], (prev, elements) => [...prev, ...elements]).toList();
+
+    setPrograms(allPrograms);
+  }
+
+  bool get showSports => _showSports;
+  void updateShowSport(bool value) {
+    _showSports = value;
+    _fetchSports();
+  }
+
+  Future<void> _fetchSports() async {
+    if (!_showSports) {
+      await fetchSportsFromDate();
+      return;
+    }
+
+    final prefs = await SharedPreferences.getInstance();
+    final sports = prefs.getStringList(Constants.PREFS_SPORTS) ?? [];
+    if (sports.isEmpty) {
+      return;
+    }
+
+    final filteredPrograms = sports.map((sport) {
+      return _programs.where((program) {
+        return program.title.toLowerCase().indexOf(sport.toLowerCase()) != -1;
+      });
+    });
+    final allPrograms = filteredPrograms.fold<List<TvProgramDto>>(
+        [], (prev, elements) => [...prev, ...elements]).toList();
     setPrograms(allPrograms);
   }
 }

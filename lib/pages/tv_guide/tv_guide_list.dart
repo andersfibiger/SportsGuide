@@ -6,7 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
 class TvGuideList extends StatelessWidget {
-  final String _logoBaseUrl = DotEnv().env['CHANNEL_LOGO_URL']; 
+  final String _logoBaseUrl = DotEnv().env['CHANNEL_LOGO_URL'];
 
   String _parseMinute(int minute) => minute < 10 ? '0$minute' : '$minute';
 
@@ -22,7 +22,17 @@ class TvGuideList extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: DatePicker(),
+            child: Row(
+              children: [
+                Expanded(child: DatePicker()),
+                SizedBox(width: 10),
+                Text('Show only my sports'),
+                Checkbox(
+                    value: context.watch<TvGuideNotifier>().showSports,
+                    onChanged:
+                        context.watch<TvGuideNotifier>().updateShowSport),
+              ],
+            ),
           ),
           Expanded(
             child: ListView.builder(

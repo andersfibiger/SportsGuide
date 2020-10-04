@@ -1,8 +1,8 @@
-import 'package:SportsGuide/change_notifiers/add_sport_notifier.dart';
+import 'package:SportsGuide/change_notifiers/sports_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddSport extends StatelessWidget {
+class SportsList extends StatelessWidget {
   final _textController = TextEditingController();
 
   void _addSport(BuildContext context, String sport) {
@@ -10,7 +10,7 @@ class AddSport extends StatelessWidget {
       return;
     }
 
-    context.read<AddSportNotifier>().addSport(sport);
+    context.read<SportsNotifier>().addSport(sport);
   }
 
   @override
@@ -32,15 +32,15 @@ class AddSport extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: context.watch<AddSportNotifier>().sports.length,
+              itemCount: context.watch<SportsNotifier>().sports.length,
               itemBuilder: (context, index) {
-                final sport = context.read<AddSportNotifier>().sports[index];
+                final sport = context.read<SportsNotifier>().sports[index];
                 return ListTile(
                   title: Text(sport),
                   trailing: IconButton(
                     icon: Icon(Icons.delete),
                     onPressed: () =>
-                        context.read<AddSportNotifier>().removeSport(sport),
+                        context.read<SportsNotifier>().removeSport(sport),
                   ),
                 );
               },

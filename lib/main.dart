@@ -1,4 +1,4 @@
-import 'package:SportsGuide/change_notifiers/add_sport_notifier.dart';
+import 'package:SportsGuide/change_notifiers/sports_notifier.dart';
 import 'package:SportsGuide/change_notifiers/channels_notifier.dart';
 import 'package:SportsGuide/change_notifiers/tv_guide_notifier.dart';
 import 'package:SportsGuide/util/get_it.dart';
@@ -15,7 +15,7 @@ Future main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => ChannelsNotifier()),
         ChangeNotifierProvider(create: (_) => TvGuideNotifier()),
-        ChangeNotifierProvider(create: (_) => AddSportNotifier()),
+        ChangeNotifierProvider(create: (_) => SportsNotifier()),
       ],
       child: MyApp(),
     ),
