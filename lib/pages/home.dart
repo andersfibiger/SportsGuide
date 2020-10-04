@@ -1,3 +1,4 @@
+import 'package:SportsGuide/pages/add_sport.dart';
 import 'package:SportsGuide/pages/channels_list.dart';
 import 'package:SportsGuide/pages/tv_guide/tv_guide_list.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class _HomeState extends State<Home> {
   static final _widgets = <Widget>[
     TvGuideList(),
     ChannelsList(),
+    AddSport()
   ];
 
   @override
@@ -38,6 +40,10 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.tv),
             label: 'Channels',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            label: 'Add'
+          )
         ],
         currentIndex: _currentIndex,
         onTap: _onTap,
