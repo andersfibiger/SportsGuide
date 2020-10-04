@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:SportsGuide/change_notifiers/channels_notifier.dart';
+import 'package:SportsGuide/change_notifiers/tv_guide_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,8 @@ class ChannelsList extends StatelessWidget {
             child: ListView.builder(
               itemCount: context.watch<ChannelsNotifier>().channels.length,
               itemBuilder: (context, index) {
-                final channel = context.read<ChannelsNotifier>().channels[index];
+                final channel =
+                    context.read<ChannelsNotifier>().channels[index];
                 return CheckboxListTile(
                   title: Text(channel.title),
                   secondary: Image.network(
@@ -37,8 +39,9 @@ class ChannelsList extends StatelessWidget {
                     height: 40,
                     width: 40,
                   ),
-                  onChanged: (_) =>
-                      context.read<ChannelsNotifier>().updateSavedChannels(channel),
+                  onChanged: (_) => context
+                      .read<ChannelsNotifier>()
+                      .updateSavedChannels(channel),
                   value: context
                       .watch<ChannelsNotifier>()
                       .savedChannels
@@ -52,6 +55,7 @@ class ChannelsList extends StatelessWidget {
           RaisedButton(
             onPressed: () async {
               await context.read<ChannelsNotifier>().saveFavourites();
+              await context.read<TvGuideNotifier>().fetchSportsFromDate();
               Scaffold.of(context)
                   .showSnackBar(SnackBar(content: Text('Saved')));
             },
