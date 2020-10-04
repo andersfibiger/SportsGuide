@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
-class TvGuide extends StatelessWidget {
+class TvGuideList extends StatelessWidget {
   final String _logoBaseUrl = DotEnv().env['CHANNEL_LOGO_URL']; 
 
   String _parseMinute(int minute) => minute < 10 ? '0$minute' : '$minute';

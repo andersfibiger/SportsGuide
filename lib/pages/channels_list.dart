@@ -3,8 +3,8 @@ import 'package:SportsGuide/change_notifiers/channels_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ChannelFavourites extends StatelessWidget {
-  const ChannelFavourites();
+class ChannelsList extends StatelessWidget {
+  const ChannelsList();
 
   @override
   Widget build(BuildContext context) {
