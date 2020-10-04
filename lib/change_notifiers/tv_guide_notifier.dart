@@ -12,13 +12,13 @@ class TvGuideNotifier with ChangeNotifier {
   bool _showSports = false;
 
   TvGuideNotifier() {
-    fetchAllSports();
+    fetchSports();
   }
 
   DateTime get selectedDate => _selectedDate;
   Future<void> updateDate(DateTime date) async {
     _selectedDate = date;
-    await fetchAllSports();
+    await fetchSports();
   }
 
   List<TvProgramDto> get programs => _programs;
@@ -46,10 +46,10 @@ class TvGuideNotifier with ChangeNotifier {
   bool get showSports => _showSports;
   void updateShowSport(bool value) {
     _showSports = value;
-    fetchChosenSports();
+    fetchSports();
   }
 
-  Future<void> fetchChosenSports() async {
+  Future<void> fetchSports() async {
     if (!_showSports) {
       await fetchAllSports();
       return;

@@ -14,12 +14,12 @@ class SportsList extends StatelessWidget {
 
     context.read<SportsNotifier>().addSport(sport);
     _formKey.currentState.reset();
-    await context.read<TvGuideNotifier>().fetchChosenSports();
+    await context.read<TvGuideNotifier>().fetchSports();
   }
 
   Future<void> _onRemoveSport(BuildContext context, String sport) async {
     context.read<SportsNotifier>().removeSport(sport);
-    await context.read<TvGuideNotifier>().fetchChosenSports();
+    await context.read<TvGuideNotifier>().fetchSports();
   }
 
   @override
