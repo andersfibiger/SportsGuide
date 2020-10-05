@@ -15,7 +15,7 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     return RawMaterialButton(
         fillColor: Colors.deepOrange,
-        splashColor: Colors.orange,
+        splashColor: Colors.orangeAccent,
         onPressed: onPressed,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),

@@ -2,6 +2,7 @@ import 'package:SportsGuide/change_notifiers/sports_notifier.dart';
 import 'package:SportsGuide/change_notifiers/tv_guide_notifier.dart';
 import 'package:SportsGuide/common/button.dart';
 import 'package:SportsGuide/common/search_field_container.dart';
+import 'package:SportsGuide/common/sport_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +32,14 @@ class SportsList extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Add sport to filter for', style: TextStyle(fontSize: 20)),
+          const Text(
+            'Add sport to filter for',
+            style: TextStyle(
+              fontSize: 30,
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           const SizedBox(height: 10.0),
           Form(
             key: _formKey,
@@ -50,9 +58,7 @@ class SportsList extends StatelessWidget {
                   return null;
                 },
                 decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'Search'
-                ),
+                    border: InputBorder.none, hintText: 'Search'),
               ),
             ),
           ),
@@ -62,18 +68,9 @@ class SportsList extends StatelessWidget {
               itemCount: context.watch<SportsNotifier>().sports.length,
               itemBuilder: (context, index) {
                 final sport = context.read<SportsNotifier>().sports[index];
-                return Column(
-                  children: [
-                    ListTile(
-                      title: Text(sport),
-                      trailing: IconButton(
-                        icon: Icon(Icons.delete),
-                        onPressed: () async =>
-                            await _onRemoveSport(context, sport),
-                      ),
-                    ),
-                    const Divider(),
-                  ],
+                return SportTile(
+                  sport: sport,
+                  onDismissed: (direction) async => await _onRemoveSport(context, sport),
                 );
               },
             ),
@@ -83,7 +80,7 @@ class SportsList extends StatelessWidget {
               onPressed: () async =>
                   await _onAddSport(context, _textController.text),
               child: const Text('Add sport'),
-              iconData: Icons.add_box,
+              iconData: Icons.add,
             ),
           ),
         ],
