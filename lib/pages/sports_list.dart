@@ -1,6 +1,7 @@
 import 'package:SportsGuide/change_notifiers/sports_notifier.dart';
 import 'package:SportsGuide/change_notifiers/tv_guide_notifier.dart';
 import 'package:SportsGuide/common/button.dart';
+import 'package:SportsGuide/common/search_field_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,35 +27,36 @@ class SportsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Add sport to filter for', style: TextStyle(fontSize: 20)),
-          SizedBox(height: 10.0),
+          const Text('Add sport to filter for', style: TextStyle(fontSize: 20)),
+          const SizedBox(height: 10.0),
           Form(
             key: _formKey,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: TextFormField(
-              controller: _textController,
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Enter a sport';
-                }
-                if (context.read<SportsNotifier>().sports.contains(value)) {
-                  return 'Already added';
-                }
+            child: SearchFieldContainer(
+              child: TextFormField(
+                controller: _textController,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Enter a sport';
+                  }
+                  if (context.read<SportsNotifier>().sports.contains(value)) {
+                    return 'Already added';
+                  }
 
-                return null;
-              },
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  return null;
+                },
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Search'
                 ),
               ),
             ),
           ),
-          Divider(),
+          const Divider(),
           Expanded(
             child: ListView.builder(
               itemCount: context.watch<SportsNotifier>().sports.length,
@@ -66,10 +68,11 @@ class SportsList extends StatelessWidget {
                       title: Text(sport),
                       trailing: IconButton(
                         icon: Icon(Icons.delete),
-                        onPressed: () async => await _onRemoveSport(context, sport),
+                        onPressed: () async =>
+                            await _onRemoveSport(context, sport),
                       ),
                     ),
-                    Divider(),
+                    const Divider(),
                   ],
                 );
               },
@@ -79,7 +82,7 @@ class SportsList extends StatelessWidget {
             child: Button(
               onPressed: () async =>
                   await _onAddSport(context, _textController.text),
-              child: Text('Add sport'),
+              child: const Text('Add sport'),
               iconData: Icons.add_box,
             ),
           ),

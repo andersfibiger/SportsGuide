@@ -37,7 +37,7 @@ class _HomeState extends State<Home> {
       ),
       body: _widgets.elementAt(_currentIndex),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.tv),
             label: 'Programs',
