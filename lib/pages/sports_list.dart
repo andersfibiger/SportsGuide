@@ -1,5 +1,6 @@
 import 'package:SportsGuide/change_notifiers/sports_notifier.dart';
 import 'package:SportsGuide/change_notifiers/tv_guide_notifier.dart';
+import 'package:SportsGuide/common/button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -75,12 +76,11 @@ class SportsList extends StatelessWidget {
             ),
           ),
           Center(
-            child: RaisedButton(
+            child: Button(
               onPressed: () async =>
                   await _onAddSport(context, _textController.text),
               child: Text('Add sport'),
-              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-              color: Theme.of(context).accentColor,
+              iconData: Icons.add_box,
             ),
           ),
         ],

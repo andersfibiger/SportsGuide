@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:SportsGuide/change_notifiers/channels_notifier.dart';
 import 'package:SportsGuide/change_notifiers/tv_guide_notifier.dart';
+import 'package:SportsGuide/common/button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -58,16 +59,15 @@ class ChannelsList extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20),
-          RaisedButton(
+          Button(
             onPressed: () async {
               await context.read<ChannelsNotifier>().saveFavourites();
               await context.read<TvGuideNotifier>().fetchSports();
               Scaffold.of(context)
                   .showSnackBar(SnackBar(content: Text('Saved')));
             },
-            color: Theme.of(context).accentColor,
             child: Text('Save channels'),
-            padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+            iconData: Icons.add,
           ),
           SizedBox(height: 20),
         ],
