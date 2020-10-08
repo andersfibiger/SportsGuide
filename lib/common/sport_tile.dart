@@ -24,7 +24,7 @@ class SportTile extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24.0),
-                color: Colors.red,
+                color: Theme.of(context).errorColor
               ),
             ),
             Dismissible(
@@ -38,7 +38,7 @@ class SportTile extends StatelessWidget {
                 height: 75,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(24.0),
-                  color: Colors.deepOrange,
+                  color: Theme.of(context).primaryColor,
                 ),
                 child: ListTile(
                   title: Align(

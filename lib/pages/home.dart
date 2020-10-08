@@ -17,17 +17,9 @@ class _HomeState extends State<Home> {
     });
   }
 
-  final _titles = <String>[
-    'Upcoming sports',
-    'Channels',
-    'Sports'
-  ];
+  final _titles = <String>['Upcoming sports', 'Channels', 'Sports'];
 
-  static final _widgets = <Widget>[
-    TvGuideList(),
-    ChannelsList(),
-    SportsList()
-  ];
+  static final _widgets = <Widget>[TvGuideList(), ChannelsList(), SportsList()];
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +38,7 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.tv),
             label: 'Channels',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.sports),
-            label: 'Sports'
-          )
+          BottomNavigationBarItem(icon: Icon(Icons.sports), label: 'Sports')
         ],
         currentIndex: _currentIndex,
         onTap: _onTap,

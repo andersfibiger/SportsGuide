@@ -12,7 +12,7 @@ class SearchFieldContainer extends StatelessWidget {
       height: 50,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14.0),
-        color: Colors.grey.withOpacity(0.4)
+        color: Theme.of(context).colorScheme.primaryVariant.withOpacity(0.4)
       ),
       child: child,
     );

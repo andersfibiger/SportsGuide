@@ -36,23 +36,25 @@ class ChannelsList extends StatelessWidget {
                     context.read<ChannelsNotifier>().channels[index];
                 return Column(
                   children: [
-                    CheckboxListTile(
-                      title: Text(channel.title),
-                      secondary: Image.network(
-                        channel.logo,
-                        height: 40,
-                        width: 40,
+                    Container(
+                      // color: Theme.of(context).cardColor,
+                      child: CheckboxListTile(
+                        title: Text(channel.title),
+                        secondary: Image.network(
+                          channel.logo,
+                          height: 40,
+                          width: 40,
+                        ),
+                        onChanged: (_) => context
+                            .read<ChannelsNotifier>()
+                            .updateSavedChannels(channel),
+                        value: context
+                            .watch<ChannelsNotifier>()
+                            .savedChannels
+                            .where((c) => c.id == channel.id)
+                            .isNotEmpty,
                       ),
-                      onChanged: (_) => context
-                          .read<ChannelsNotifier>()
-                          .updateSavedChannels(channel),
-                      value: context
-                          .watch<ChannelsNotifier>()
-                          .savedChannels
-                          .where((c) => c.id == channel.id)
-                          .isNotEmpty,
                     ),
-                    const Divider(),
                   ],
                 );
               },
@@ -67,7 +69,7 @@ class ChannelsList extends StatelessWidget {
                   .showSnackBar(SnackBar(content: Text('Saved')));
             },
             child: Text('Save channels'),
-            iconData: Icons.add,
+            iconData: Icons.save,
           ),
           const SizedBox(height: 20),
         ],

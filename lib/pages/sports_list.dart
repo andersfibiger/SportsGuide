@@ -32,12 +32,13 @@ class SportsList extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Add sport to filter for',
-            style: TextStyle(
-              fontSize: 30,
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
+          Center(
+            child: const Text(
+              'Add sport',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
           const SizedBox(height: 10.0),
@@ -58,7 +59,7 @@ class SportsList extends StatelessWidget {
                   return null;
                 },
                 decoration: const InputDecoration(
-                    border: InputBorder.none, hintText: 'Search'),
+                    border: InputBorder.none, hintText: 'Sport'),
               ),
             ),
           ),

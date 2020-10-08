@@ -10,7 +10,7 @@ class DatePicker extends StatelessWidget {
       context: context,
       initialDate: context.read<TvGuideNotifier>().selectedDate,
       firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 7)),
+      lastDate: DateTime.now().add(Duration(days: 30)),
     );
 
     if (pickedDate != null &&
@@ -33,13 +33,13 @@ class DatePicker extends StatelessWidget {
         textAlign: TextAlign.center,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-            borderSide: BorderSide(color: Theme.of(context).accentColor, width: 2.0)
+            borderRadius: BorderRadius.all(
+              Radius.circular(5.0),
+            ),
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
           ),
-          icon: Icon(Icons.today, color: Theme.of(context).accentColor),
         ),
       ),
     );
