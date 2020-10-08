@@ -22,15 +22,20 @@ class TvGuideList extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Expanded(child: DatePicker()),
-                SizedBox(width: 10),
-                Text('Show only my sports'),
-                Checkbox(
-                    value: context.watch<TvGuideNotifier>().showSports,
-                    onChanged:
-                        context.watch<TvGuideNotifier>().updateShowSport),
+                DatePicker(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text('Show only my sports'),
+                    Checkbox(
+                        value: context.watch<TvGuideNotifier>().showSports,
+                        onChanged:
+                            context.watch<TvGuideNotifier>().updateShowSport),
+                  ],
+                )
               ],
             ),
           ),
