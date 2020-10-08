@@ -59,7 +59,10 @@ class SportsList extends StatelessWidget {
                   return null;
                 },
                 decoration: const InputDecoration(
-                    border: InputBorder.none, hintText: 'Sport'),
+                  border: InputBorder.none,
+                  hintText: 'Sport',
+                  helperText: ' '
+                ),
               ),
             ),
           ),
@@ -71,7 +74,8 @@ class SportsList extends StatelessWidget {
                 final sport = context.read<SportsNotifier>().sports[index];
                 return SportTile(
                   sport: sport,
-                  onDismissed: (direction) async => await _onRemoveSport(context, sport),
+                  onDismissed: (direction) async =>
+                      await _onRemoveSport(context, sport),
                 );
               },
             ),

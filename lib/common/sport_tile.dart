@@ -7,6 +7,8 @@ class SportTile extends StatelessWidget {
   final String sport;
   final Function(DismissDirection) onDismissed;
 
+  double _getHeigt(BuildContext context) => MediaQuery.of(context).size.height * 0.08;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -14,7 +16,7 @@ class SportTile extends StatelessWidget {
         Stack(
           children: [
             Container(
-              height: 75,
+              height: _getHeigt(context),
               child: Align(
                 alignment: Alignment.centerRight,
                 child: Padding(
@@ -35,7 +37,7 @@ class SportTile extends StatelessWidget {
                 DismissDirection.endToStart: 0.3
               },
               child: Container(
-                height: 75,
+                height: _getHeigt(context),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(24.0),
                   color: Theme.of(context).primaryColor,
