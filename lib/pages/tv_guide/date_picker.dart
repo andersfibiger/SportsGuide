@@ -6,6 +6,7 @@ import '../../util/date_formatter.dart';
 
 class DatePicker extends StatelessWidget {
   final IDateFormatter _dateFormatter;
+  final _pageController = PageController(initialPage: 1);
 
   DatePicker() : _dateFormatter = GetIt.I<IDateFormatter>();
 
@@ -41,6 +42,16 @@ class DatePicker extends StatelessWidget {
         .updateDate(currentDate.subtract(Duration(days: 1)));
   }
 
+  void _onDateChanged(BuildContext context, int page) {
+    if (page < context.read<TvGuideNotifier>().previousPage) {
+      _onPreviousDate(context);
+    } else {
+      _onNextDate(context);
+    }
+
+    context.read<TvGuideNotifier>().previousPage = page;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -51,22 +62,32 @@ class DatePicker extends StatelessWidget {
             onPressed: () => _onPreviousDate(context),
           ),
           Expanded(
-            child: TextField(
-              readOnly: true,
-              onTap: () async => await _onSelectDate(context),
-              controller: TextEditingController(
-                text: _getDate(context.watch<TvGuideNotifier>().selectedDate),
-              ),
-              textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5.0),
-                  ),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                ),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.08,
+              child: PageView.builder(
+                onPageChanged: (page) => _onDateChanged(context, page),
+                controller: _pageController,
+                itemBuilder: (context, index) {
+                  return TextField(
+                    readOnly: true,
+                    onTap: () async => await _onSelectDate(context),
+                    controller: TextEditingController(
+                      text: _getDate(
+                          context.read<TvGuideNotifier>().selectedDate),
+                    ),
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5.0),
+                        ),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ),

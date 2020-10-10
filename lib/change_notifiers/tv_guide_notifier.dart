@@ -8,6 +8,7 @@ import '../util/constants.dart';
 class TvGuideNotifier with ChangeNotifier {
   final _tvGuideService = GetIt.I<ITvGuideService>();
   DateTime _selectedDate = DateTime.now();
+  int previousPage = 1;
   List<TvProgramDto> _programs = [];
   bool _showSports = false;
 
