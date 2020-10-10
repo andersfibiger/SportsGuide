@@ -1,6 +1,6 @@
-import 'package:SportsGuide/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../util/constants.dart';
 
 class SportsNotifier with ChangeNotifier {
   List<String> _sports = [];

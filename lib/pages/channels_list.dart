@@ -1,10 +1,10 @@
 import 'dart:ui';
-import 'package:SportsGuide/change_notifiers/channels_notifier.dart';
-import 'package:SportsGuide/change_notifiers/tv_guide_notifier.dart';
-import 'package:SportsGuide/common/button.dart';
-import 'package:SportsGuide/common/search_field_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../change_notifiers/channels_notifier.dart';
+import '../change_notifiers/tv_guide_notifier.dart';
+import '../common/button.dart';
+import '../common/search_field_container.dart';
 
 class ChannelsList extends StatelessWidget {
   const ChannelsList();

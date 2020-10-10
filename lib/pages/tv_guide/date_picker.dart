@@ -1,8 +1,8 @@
-import 'package:SportsGuide/change_notifiers/tv_guide_notifier.dart';
-import 'package:SportsGuide/util/date_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import '../../change_notifiers/tv_guide_notifier.dart';
+import '../../util/date_formatter.dart';
 
 class DatePicker extends StatelessWidget {
   final IDateFormatter _dateFormatter;

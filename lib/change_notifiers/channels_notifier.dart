@@ -1,9 +1,9 @@
-import 'package:SportsGuide/models/channel.dart';
-import 'package:SportsGuide/services/tv_guide_service.dart';
-import 'package:SportsGuide/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../models/channel.dart';
+import '../services/tv_guide_service.dart';
+import '../util/constants.dart';
 
 class ChannelsNotifier extends ChangeNotifier {
   List<Channel> _savedChannels = [];

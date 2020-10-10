@@ -1,9 +1,9 @@
-import 'package:SportsGuide/dtos/tv_program_dto.dart';
-import 'package:SportsGuide/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../dtos/tv_program_dto.dart';
 import '../services/tv_guide_service.dart';
+import '../util/constants.dart';
 
 class TvGuideNotifier with ChangeNotifier {
   final _tvGuideService = GetIt.I<ITvGuideService>();

@@ -1,11 +1,11 @@
-import 'package:SportsGuide/change_notifiers/sports_notifier.dart';
-import 'package:SportsGuide/change_notifiers/channels_notifier.dart';
-import 'package:SportsGuide/change_notifiers/tv_guide_notifier.dart';
-import 'package:SportsGuide/util/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'change_notifiers/channels_notifier.dart';
+import 'change_notifiers/sports_notifier.dart';
+import 'change_notifiers/tv_guide_notifier.dart';
 import 'pages/home.dart';
+import 'util/get_it.dart';
 
 Future main() async {
   await DotEnv().load('.env');

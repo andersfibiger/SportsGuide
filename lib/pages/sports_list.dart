@@ -1,10 +1,10 @@
-import 'package:SportsGuide/change_notifiers/sports_notifier.dart';
-import 'package:SportsGuide/change_notifiers/tv_guide_notifier.dart';
-import 'package:SportsGuide/common/button.dart';
-import 'package:SportsGuide/common/search_field_container.dart';
-import 'package:SportsGuide/common/sport_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../change_notifiers/sports_notifier.dart';
+import '../change_notifiers/tv_guide_notifier.dart';
+import '../common/button.dart';
+import '../common/search_field_container.dart';
+import '../common/sport_tile.dart';
 
 class SportsList extends StatelessWidget {
   final _textController = TextEditingController();

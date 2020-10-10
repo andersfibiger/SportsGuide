@@ -1,7 +1,7 @@
-import 'package:SportsGuide/pages/sports_list.dart';
-import 'package:SportsGuide/pages/channels_list.dart';
-import 'package:SportsGuide/pages/tv_guide/tv_guide_list.dart';
 import 'package:flutter/material.dart';
+import 'channels_list.dart';
+import 'sports_list.dart';
+import 'tv_guide/tv_guide_list.dart';
 
 class Home extends StatefulWidget {
   @override

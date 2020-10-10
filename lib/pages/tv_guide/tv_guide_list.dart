@@ -1,9 +1,9 @@
-import 'package:SportsGuide/change_notifiers/tv_guide_notifier.dart';
-import 'package:SportsGuide/dtos/tv_program_dto.dart';
-import 'package:SportsGuide/pages/tv_guide/date_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import '../../change_notifiers/tv_guide_notifier.dart';
+import '../../dtos/tv_program_dto.dart';
+import 'date_picker.dart';
 
 class TvGuideList extends StatelessWidget {
   final String _logoBaseUrl = DotEnv().env['CHANNEL_LOGO_URL'];
