@@ -10,10 +10,24 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
+  PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: _currentIndex);
+  }
+
+  void _onPageChanged(int page) {
+    setState(() {
+      _currentIndex = page;
+    });
+  }
 
   void _onTap(index) {
     setState(() {
       _currentIndex = index;
+      _pageController.jumpToPage(index);
     });
   }
 
@@ -27,7 +41,11 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text(_titles.elementAt(_currentIndex)),
       ),
-      body: _widgets.elementAt(_currentIndex),
+      body: PageView(
+        children: _widgets,
+        controller: _pageController,
+        onPageChanged: _onPageChanged,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
