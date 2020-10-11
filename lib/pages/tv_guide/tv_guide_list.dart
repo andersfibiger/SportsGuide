@@ -1,4 +1,4 @@
-import 'package:SportsGuide/pages/tv_guide/program_tile.dart';
+import 'program_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../change_notifiers/tv_guide_notifier.dart';

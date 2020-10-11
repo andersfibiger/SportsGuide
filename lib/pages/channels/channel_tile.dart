@@ -1,7 +1,7 @@
-import 'package:SportsGuide/change_notifiers/channels_notifier.dart';
-import 'package:SportsGuide/models/channel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../change_notifiers/channels_notifier.dart';
+import '../../models/channel.dart';
 
 class ChannelTile extends StatelessWidget {
   const ChannelTile({

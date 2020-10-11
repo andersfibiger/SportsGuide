@@ -1,4 +1,4 @@
-import 'package:SportsGuide/dtos/tv_program_dto.dart';
+import '../../dtos/tv_program_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
