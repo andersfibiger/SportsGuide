@@ -75,17 +75,28 @@ class SportsList extends StatelessWidget {
           ),
           const Divider(),
           Expanded(
-            child: ListView.builder(
-              itemCount: context.watch<SportsNotifier>().sports.length,
-              itemBuilder: (context, index) {
-                final sport = context.read<SportsNotifier>().sports[index];
-                return SportTile(
-                  sport: _capitalizeFirstLetter(sport),
-                  onDismissed: (direction) async =>
-                      await _onRemoveSport(context, sport),
-                );
-              },
-            ),
+            child: context.watch<SportsNotifier>().sports.isEmpty
+                ? Center(
+                    child: Text(
+                      'No sports added yet',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 30,
+                      ),
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: context.watch<SportsNotifier>().sports.length,
+                    itemBuilder: (context, index) {
+                      final sport =
+                          context.read<SportsNotifier>().sports[index];
+                      return SportTile(
+                        sport: _capitalizeFirstLetter(sport),
+                        onDismissed: (direction) async =>
+                            await _onRemoveSport(context, sport),
+                      );
+                    },
+                  ),
           ),
           Center(
             child: Button(

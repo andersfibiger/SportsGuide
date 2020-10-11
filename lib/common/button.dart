@@ -17,16 +17,14 @@ class Button extends StatelessWidget {
         fillColor: Theme.of(context).primaryColor,
         splashColor: Theme.of(context).primaryColorDark,
         onPressed: onPressed,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 36.0),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(iconData, color: Colors.amber),
-              const SizedBox(width: 8.0),
-              child,
-            ],
-          ),
+        padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 36.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(iconData, color: Theme.of(context).accentColor),
+            const SizedBox(width: 8.0),
+            child,
+          ],
         ),
         shape: const StadiumBorder(),
         textStyle: TextStyle(color: Colors.white));
