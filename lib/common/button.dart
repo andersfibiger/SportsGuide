@@ -5,7 +5,7 @@ class Button extends StatelessWidget {
   final Widget child;
   final IconData iconData;
 
-  Button({
+  const Button({
     @required this.onPressed,
     @required this.child,
     @required this.iconData,
@@ -18,7 +18,7 @@ class Button extends StatelessWidget {
         splashColor: Theme.of(context).primaryColorDark,
         onPressed: onPressed,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 36.0),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
