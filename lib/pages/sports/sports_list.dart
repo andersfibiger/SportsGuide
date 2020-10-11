@@ -8,22 +8,44 @@ import 'sport_tile.dart';
 
 class SportsList extends StatelessWidget {
   final _textController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
 
   Future<void> _onAddSport(BuildContext context, String sport) async {
-    if (!_formKey.currentState.validate()) {
+    if (sport.isEmpty) {
+      _showSnackBar(context, 'Enter a sport to add');
       return;
     }
 
-    context.read<SportsNotifier>().addSport(sport);
-    _formKey.currentState.reset();
+    if (context.read<SportsNotifier>().sports.contains(sport.toLowerCase())) {
+      _showSnackBar(context, '$sport already exists');
+      return;
+    }
+
+    context.read<SportsNotifier>().addSport(sport.toLowerCase());
+    _textController.clear();
     await context.read<TvGuideNotifier>().fetchSports();
+  }
+
+  void _showSnackBar(BuildContext context, String text) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Row(
+        children: [
+          Icon(Icons.warning_amber_sharp, color: Theme.of(context).accentColor),
+          SizedBox(width: 10),
+          Text(text)
+        ],
+      ),
+      backgroundColor: Theme.of(context).primaryColor,
+      duration: Duration(milliseconds: 1500),
+    ));
   }
 
   Future<void> _onRemoveSport(BuildContext context, String sport) async {
     context.read<SportsNotifier>().removeSport(sport);
     await context.read<TvGuideNotifier>().fetchSports();
   }
+
+  String _capitalizeFirstLetter(String value) =>
+      value[0].toUpperCase() + value.substring(1);
 
   @override
   Widget build(BuildContext context) {
@@ -42,27 +64,12 @@ class SportsList extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10.0),
-          Form(
-            key: _formKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: SearchFieldContainer(
-              child: TextFormField(
-                controller: _textController,
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Enter a sport';
-                  }
-                  if (context.read<SportsNotifier>().sports.contains(value)) {
-                    return 'Already added';
-                  }
-
-                  return null;
-                },
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'Sport',
-                  helperText: ' ',
-                ),
+          SearchFieldContainer(
+            child: TextField(
+              controller: _textController,
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Sport',
               ),
             ),
           ),
@@ -73,7 +80,7 @@ class SportsList extends StatelessWidget {
               itemBuilder: (context, index) {
                 final sport = context.read<SportsNotifier>().sports[index];
                 return SportTile(
-                  sport: sport,
+                  sport: _capitalizeFirstLetter(sport),
                   onDismissed: (direction) async =>
                       await _onRemoveSport(context, sport),
                 );
