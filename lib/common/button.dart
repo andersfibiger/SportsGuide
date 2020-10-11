@@ -15,7 +15,7 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     return RawMaterialButton(
         fillColor: Theme.of(context).primaryColor,
-        splashColor: Theme.of(context).primaryColorDark,
+        splashColor: Theme.of(context).colorScheme.primaryVariant,
         onPressed: onPressed,
         padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 36.0),
         child: Row(
