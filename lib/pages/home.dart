@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'channels_list.dart';
-import 'sports_list.dart';
+import 'channels/channels_list.dart';
+import 'sports/sports_list.dart';
 import 'tv_guide/tv_guide_list.dart';
 
 class Home extends StatefulWidget {
@@ -56,10 +56,16 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.tv),
             label: 'Channels',
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.sports), label: 'Sports')
+          BottomNavigationBarItem(
+            icon: Icon(Icons.sports),
+            label: 'Sports',
+          )
         ],
         currentIndex: _currentIndex,
         onTap: _onTap,
+        selectedItemColor: Theme.of(context).accentColor,
+        unselectedItemColor: Theme.of(context).colorScheme.onBackground,
+        backgroundColor: Theme.of(context).primaryColor,
       ),
     );
   }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../change_notifiers/sports_notifier.dart';
-import '../change_notifiers/tv_guide_notifier.dart';
-import '../common/button.dart';
-import '../common/search_field_container.dart';
-import '../common/sport_tile.dart';
+import '../../change_notifiers/sports_notifier.dart';
+import '../../change_notifiers/tv_guide_notifier.dart';
+import '../../common/button.dart';
+import '../../common/search_field_container.dart';
+import 'sport_tile.dart';
 
 class SportsList extends StatelessWidget {
   final _textController = TextEditingController();
@@ -61,7 +61,7 @@ class SportsList extends StatelessWidget {
                 decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Sport',
-                  helperText: ' '
+                  helperText: ' ',
                 ),
               ),
             ),

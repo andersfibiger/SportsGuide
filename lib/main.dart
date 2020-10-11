@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
           primaryVariant: Color(0xFF14313d),
           secondary: Color(0xFFfca311),
           secondaryVariant: Color(0xFFA44728),
-          surface: Color(0xFF83781B),
+          surface: Color(0xFFe5e5e5),
         ),
         textTheme: Typography.blackCupertino,
       ),

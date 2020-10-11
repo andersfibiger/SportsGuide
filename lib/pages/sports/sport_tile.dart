@@ -7,7 +7,8 @@ class SportTile extends StatelessWidget {
   final String sport;
   final Function(DismissDirection) onDismissed;
 
-  double _getHeigt(BuildContext context) => MediaQuery.of(context).size.height * 0.08;
+  double _getHeigt(BuildContext context) =>
+      MediaQuery.of(context).size.height * 0.08;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +26,8 @@ class SportTile extends StatelessWidget {
                 ),
               ),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(24.0),
-                color: Theme.of(context).errorColor
-              ),
+                  borderRadius: BorderRadius.circular(24.0),
+                  color: Theme.of(context).errorColor),
             ),
             Dismissible(
               key: Key(sport),
