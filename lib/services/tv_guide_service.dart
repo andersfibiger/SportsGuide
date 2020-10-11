@@ -13,14 +13,15 @@ abstract class ITvGuideService {
 }
 
 class TvGuideService implements ITvGuideService {
-  String _baseUrl; 
+  String _baseUrl;
 
-  TvGuideService()
-    : _baseUrl = DotEnv().env['TV_GUIDE_API_URL'];
+  TvGuideService() : _baseUrl = DotEnv().env['TV_GUIDE_API_URL'];
 
   Future<List<Channel>> getChannels() async {
     var response = await http.get('$_baseUrl/schedules/channels');
-    return (jsonDecode(response.body)['channels'] as List).map((c) => Channel.fromJson(c)).toList();
+    return (jsonDecode(response.body)['channels'] as List)
+        .map((c) => Channel.fromJson(c))
+        .toList();
   }
 
   Future<Channel> getChannelById(String id) async {
@@ -29,14 +30,21 @@ class TvGuideService implements ITvGuideService {
   }
 
   Future<List<DayView>> getTvGuideByDate(DateTime date) async {
+    if (date.isBefore(_getYesterDayDate())) {
+      throw new Exception(
+          'Cannot fetch tvguide since $date is before ${_getYesterDayDate()}');
+    }
+
     var queryParams = await _getChannels();
     var query = '$_baseUrl/epg/dayviews/${_formatDate(date)}$queryParams';
     print('calling: $query');
     var response = await http.get(query);
-    return (jsonDecode(response.body) as List).map((e) => DayView.fromJson(e)).toList(); 
+    return (jsonDecode(response.body) as List)
+        .map((e) => DayView.fromJson(e))
+        .toList();
   }
 
-  Future<String>  _getChannels() async {
+  Future<String> _getChannels() async {
     final prefs = await SharedPreferences.getInstance();
     final channelIds = prefs.getStringList(Constants.PREFS_CHANNELS);
 
@@ -50,4 +58,9 @@ class TvGuideService implements ITvGuideService {
   }
 
   String _formatDate(DateTime date) => '${date.year}-${date.month}-${date.day}';
+
+  DateTime _getYesterDayDate() {
+    final yesterDay = DateTime.now().subtract(Duration(days: 1));
+    return DateTime(yesterDay.year, yesterDay.month, yesterDay.day);
+  }
 }

@@ -14,18 +14,45 @@ class DatePicker extends StatelessWidget {
     var pickedDate = await showDatePicker(
       context: context,
       initialDate: context.read<TvGuideNotifier>().selectedDate,
-      firstDate: DateTime.now(),
+      firstDate: DateTime.now().subtract(Duration(days: 1)),
       lastDate: DateTime.now().add(Duration(days: 30)),
     );
 
     if (pickedDate != null &&
         pickedDate != context.read<TvGuideNotifier>().selectedDate) {
-      context.read<TvGuideNotifier>().updateDate(pickedDate);
+      context.read<TvGuideNotifier>().didPickDate = true;
+      await context.read<TvGuideNotifier>().updateDate(pickedDate);
+
+      final page = _calculatePageNumber(pickedDate);
+      _pageController.jumpToPage(page);
     }
   }
 
-  String _getDate(DateTime date) {
-    return _dateFormatter.getDay(date);
+  int _calculatePageNumber(DateTime pickedDate) {
+    var currentDate = DateTime.now();
+    currentDate =
+        DateTime(currentDate.year, currentDate.month, currentDate.day);
+
+    final difference = pickedDate.difference(currentDate);
+    return difference.inDays + 1;
+  }
+
+  String _getDate(BuildContext context, int index) {
+    final currentDate = DateTime.now();
+    DateTime newDate;
+    switch (index) {
+      case 0:
+        newDate = currentDate.subtract(Duration(days: 1));
+        break;
+      case 1:
+        newDate = currentDate;
+        break;
+      default:
+        newDate = currentDate.add(Duration(days: index - 1));
+        break;
+    }
+
+    return _dateFormatter.getDay(newDate);
   }
 
   void _onNextDate(BuildContext context) {
@@ -43,10 +70,18 @@ class DatePicker extends StatelessWidget {
   }
 
   void _onDateChanged(BuildContext context, int page) {
-    if (page < context.read<TvGuideNotifier>().previousPage) {
+    if (context.read<TvGuideNotifier>().didPickDate) {
+      context.read<TvGuideNotifier>().previousPage = page;
+      context.read<TvGuideNotifier>().didPickDate = false;
+      return;
+    }
+
+    if (page == context.read<TvGuideNotifier>().previousPage - 1) {
       _onPreviousDate(context);
-    } else {
+    } else if (page == context.read<TvGuideNotifier>().previousPage + 1) {
       _onNextDate(context);
+    } else {
+      return;
     }
 
     context.read<TvGuideNotifier>().previousPage = page;
@@ -57,10 +92,7 @@ class DatePicker extends StatelessWidget {
     return Container(
       child: Row(
         children: [
-          IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () => _onPreviousDate(context),
-          ),
+          Icon(Icons.arrow_back_ios),
           Expanded(
             child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.08,
@@ -72,8 +104,7 @@ class DatePicker extends StatelessWidget {
                     readOnly: true,
                     onTap: () async => await _onSelectDate(context),
                     controller: TextEditingController(
-                      text: _getDate(
-                          context.read<TvGuideNotifier>().selectedDate),
+                      text: _getDate(context, index),
                     ),
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
@@ -91,14 +122,9 @@ class DatePicker extends StatelessWidget {
               ),
             ),
           ),
-          IconButton(
-            icon: Icon(Icons.arrow_forward_ios),
-            onPressed: () => _onNextDate(context),
-          ),
+          Icon(Icons.arrow_forward_ios)
         ],
       ),
     );
   }
 }
-
-enum Direction { Right, Left }

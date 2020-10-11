@@ -10,6 +10,7 @@ class TvGuideNotifier with ChangeNotifier {
   DateTime _selectedDate = DateTime.now();
   int previousPage = 1;
   List<TvProgramDto> _programs = [];
+  bool didPickDate = false;
   bool _showSports = false;
 
   TvGuideNotifier() {
