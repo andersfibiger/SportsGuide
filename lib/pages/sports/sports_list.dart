@@ -20,7 +20,7 @@ class SportsList extends StatelessWidget {
       return;
     }
 
-    context.read<SportsNotifier>().addSport(sport.toLowerCase());
+    context.read<SportsNotifier>().addSport(sport);
     _textController.clear();
     await context.read<TvGuideNotifier>().fetchSports();
   }

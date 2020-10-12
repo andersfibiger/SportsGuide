@@ -20,6 +20,7 @@ class SportsNotifier with ChangeNotifier {
   }
 
   void addSport(String sport) async {
+    sport = sport.toLowerCase().trim();
     if (_sports.contains(sport)) {
       return;
     }
