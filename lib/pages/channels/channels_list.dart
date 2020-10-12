@@ -20,6 +20,8 @@ class ChannelsList extends StatelessWidget {
               child: TextField(
                 onChanged: (query) =>
                     context.read<ChannelsNotifier>().filterChannels(query),
+                keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Search',

@@ -60,6 +60,7 @@ class TvGuideNotifier with ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     final chosenSports = prefs.getStringList(Constants.PREFS_SPORTS) ?? [];
     if (chosenSports.isEmpty) {
+      notifyListeners();
       return;
     }
 

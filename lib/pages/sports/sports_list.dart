@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../change_notifiers/sports_notifier.dart';
 import '../../change_notifiers/tv_guide_notifier.dart';
@@ -67,6 +68,8 @@ class SportsList extends StatelessWidget {
           SearchFieldContainer(
             child: TextField(
               controller: _textController,
+              keyboardType: TextInputType.text,
+              textCapitalization: TextCapitalization.words,
               decoration: const InputDecoration(
                 border: InputBorder.none,
                 hintText: 'Sport',
