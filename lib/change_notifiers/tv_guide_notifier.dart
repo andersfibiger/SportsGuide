@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,14 +25,15 @@ class TvGuideNotifier with ChangeNotifier {
   }
 
   List<TvProgramDto> get programs => _programs;
-  void setPrograms(List<TvProgramDto> programs) {
+  void sortAndSetPrograms(List<TvProgramDto> programs) {
     _programs = programs;
+    _programs.sort();
     notifyListeners();
   }
 
   Future<void> fetchAllSports() async {
     final programs = await _fetchAllSportsByChosenDate();
-    setPrograms(programs);
+    sortAndSetPrograms(programs);
   }
 
   Future<List<TvProgramDto>> _fetchAllSportsByChosenDate() async {
@@ -73,6 +75,6 @@ class TvGuideNotifier with ChangeNotifier {
     });
     final allPrograms = filteredPrograms.fold<List<TvProgramDto>>(
         [], (prev, elements) => [...prev, ...elements]).toList();
-    setPrograms(allPrograms);
+    sortAndSetPrograms(allPrograms);
   }
 }
