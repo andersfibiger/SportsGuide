@@ -28,15 +28,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Sports guide',
       debugShowCheckedModeBanner: false,
-      // theme: ThemeData(
-      //   primarySwatch: Colors.deepOrange,
-      //   brightness: Brightness.dark,
-      //   accentColor: Colors.orangeAccent,
-      //   visualDensity: VisualDensity.adaptivePlatformDensity,
-      // ),
-      // theme: ThemeData.from(colorScheme: ColorScheme.fromSwatch(
-      //   primarySwatch: Colors.teal
-      // )),
       theme: ThemeData.from(
         colorScheme: ColorScheme(
           background: Color(0xFFe5e5e5),

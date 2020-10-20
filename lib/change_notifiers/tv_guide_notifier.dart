@@ -37,7 +37,8 @@ class TvGuideNotifier with ChangeNotifier {
   Future<List<TvProgramDto>> _fetchAllSportsByChosenDate() async {
     final dayviews = await _tvGuideService.getTvGuideByDate(_selectedDate);
     final programs = dayviews.map((channel) => channel.programs
-        .where((program) => program.categories.contains('Sport'))
+        .where((program) => program.categories.contains('Sport')
+        && program.endTime.isAfter(DateTime.now()))
         .map((x) => TvProgramDto(x.categories, x.endTime, x.id, x.startTime,
             x.title, channel.channelId)));
 
