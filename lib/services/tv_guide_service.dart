@@ -37,7 +37,6 @@ class TvGuideService implements ITvGuideService {
 
     var queryParams = await _getChannels();
     var query = '$_baseUrl/epg/dayviews/${_formatDate(date)}$queryParams';
-    print('calling: $query');
     var response = await http.get(query);
     return (jsonDecode(response.body) as List)
         .map((e) => DayView.fromJson(e))
