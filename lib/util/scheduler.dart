@@ -6,15 +6,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'constants.dart';
 
 class Scheduler {
-  static const periodicTask = 'periodicTask';
+  final _tvguideService = GetIt.I<ITvGuideService>();
+  final _notificationService = GetIt.I<INotificationService>();
 
-  static Future checkForGames() async {
-    final tvguideService = GetIt.I<ITvGuideService>();
+  Future checkForGames() async {
     final chosenSports = (await SharedPreferences.getInstance())
             .getStringList(Constants.PREFS_SPORTS) ??
         [];
 
-    final dayviews = await tvguideService.getTvGuideByDate(DateTime.now());
+    final dayviews = await _tvguideService.getTvGuideByDate(DateTime.now());
     final programs = dayviews.map((channel) => channel.programs
         .where((program) =>
             program.categories.contains('Sport') &&
@@ -29,7 +29,6 @@ class Scheduler {
             program.title.toLowerCase().indexOf(sport.toLowerCase()) != -1));
 
     if (sortedPrograms.isNotEmpty) {
-      final notificationService = GetIt.I<INotificationService>();
       final upcommingPrograms = sortedPrograms.where((program) {
         final minutesToStart =
             program.startTime.difference(DateTime.now()).inMinutes;
@@ -41,7 +40,7 @@ class Scheduler {
         final program = upcommingPrograms.first;
         final minutesBeforeStart =
             program.startTime.difference(DateTime.now()).inMinutes;
-        await notificationService.send(
+        await _notificationService.send(
             program.title, 'Starts in $minutesBeforeStart minutes');
       }
     }

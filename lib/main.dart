@@ -1,4 +1,5 @@
 import 'package:SportsGuide/services/notification_service.dart';
+import 'package:SportsGuide/util/constants.dart';
 import 'package:SportsGuide/util/scheduler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -17,8 +18,8 @@ void callbackDispatcher() async {
 
     Workmanager.executeTask((taskName, inputData) async {
       switch (taskName) {
-        case Scheduler.periodicTask:
-          await Scheduler.checkForGames();
+        case Constants.PERIODIC_TASK:
+          await Scheduler().checkForGames();
           break;
         default:
           break;

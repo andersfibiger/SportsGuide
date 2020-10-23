@@ -5,4 +5,5 @@ class Constants {
   static const PREFS_SEND_NOTIFICATIONS ='send-notifications';
 
   static const PERIODIC_TASK_NAME = 'sportsTask';
+  static const PERIODIC_TASK = 'periodicTask';
 }
