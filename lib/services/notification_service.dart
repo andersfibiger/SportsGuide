@@ -7,8 +7,8 @@ abstract class INotificationService {
 
 class NotificationService implements INotificationService {
   final notificationPlugin = FlutterLocalNotificationsPlugin();
-  final androidDetails = AndroidNotificationDetails(
-      'ioaisdoisdo123!!ks', 'channel', 'description');
+  final androidDetails = AndroidNotificationDetails('ioaisdoisdo123!!ks',
+      'SportsGuideChannel', 'Channel for sports guide notifications');
 
   @override
   Future<void> init() async {

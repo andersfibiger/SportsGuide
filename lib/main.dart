@@ -1,18 +1,40 @@
 import 'package:SportsGuide/services/notification_service.dart';
+import 'package:SportsGuide/util/scheduler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:workmanager/workmanager.dart';
 import 'change_notifiers/channels_notifier.dart';
 import 'change_notifiers/sports_notifier.dart';
 import 'change_notifiers/tv_guide_notifier.dart';
 import 'pages/home.dart';
 import 'util/get_it.dart';
 
+void callbackDispatcher() async {
+    await DotEnv().load('.env');
+    setupGetIt();
+
+    Workmanager.executeTask((taskName, inputData) async {
+      switch (taskName) {
+        case Scheduler.periodicTask:
+          await Scheduler.checkForGames();
+          break;
+        default:
+          break;
+      }
+
+      print('done calling');
+      return Future.value(true);
+    });
+  }
+
 Future main() async {
   await DotEnv().load('.env');
   setupGetIt();
   await GetIt.I<INotificationService>().init();
+  await Workmanager.initialize(callbackDispatcher, isInDebugMode: true);
+  
   runApp(
     MultiProvider(
       providers: [
