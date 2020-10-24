@@ -1,6 +1,6 @@
+import 'package:SportsGuide/services/preference_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../models/channel.dart';
 import '../services/tv_guide_service.dart';
 import '../util/constants.dart';
@@ -10,6 +10,7 @@ class ChannelsNotifier extends ChangeNotifier {
   List<Channel> get savedChannels => _savedChannels;
   List<Channel> _channels = [];
   List<Channel> get channels => _channels;
+  final preferenceService = GetIt.I<IPreferenceService>();
 
   ChannelsNotifier() {
     _getChannels();
@@ -41,14 +42,12 @@ class ChannelsNotifier extends ChangeNotifier {
   }
 
   Future saveFavourites() async {
-    final prefs = await SharedPreferences.getInstance();
     final channelIds = _savedChannels.map((e) => e.id).toList();
-    await prefs.setStringList(Constants.PREFS_CHANNELS, channelIds);
+    await preferenceService.setStrings(Constants.PREFS_CHANNELS, channelIds);
   }
 
   Future _fetchFavourites() async {
-    final prefs = await SharedPreferences.getInstance();
-    final channelIds = prefs.getStringList(Constants.PREFS_CHANNELS) ?? [];
+    final channelIds = (await preferenceService.getStrings(Constants.PREFS_CHANNELS)) ?? [];
     if (channelIds.isNotEmpty) {
       final tvGuideService = GetIt.I<ITvGuideService>();
       final mapped =

@@ -1,6 +1,7 @@
+import 'package:SportsGuide/services/preference_service.dart';
 import 'package:SportsGuide/util/constants.dart';
-import 'package:SportsGuide/util/scheduler.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 import 'channels/channels_list.dart';
@@ -16,6 +17,8 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   bool _sendNotifications = false;
   PageController _pageController;
+    final _preferenceService = GetIt.I<IPreferenceService>();
+
 
   @override
   void initState() {
@@ -25,9 +28,9 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> _initPreferences() async {
-    final prefs = await SharedPreferences.getInstance();
+    final value = await _preferenceService.getBool(Constants.PREFS_SEND_NOTIFICATIONS);
     setState(() {
-      _sendNotifications = prefs.getBool(Constants.PREFS_SEND_NOTIFICATIONS);
+      _sendNotifications = value;
     });
   }
 
@@ -45,13 +48,11 @@ class _HomeState extends State<Home> {
   }
 
   Future _onNotificationChange() async {
-    final prefs = await SharedPreferences.getInstance();
-
     setState(() {
       _sendNotifications = !_sendNotifications;
     });
 
-    await prefs.setBool(Constants.PREFS_SEND_NOTIFICATIONS, _sendNotifications);
+    await _preferenceService.setBool(Constants.PREFS_SEND_NOTIFICATIONS, _sendNotifications);
 
     if (_sendNotifications) {
       await Workmanager.registerPeriodicTask(

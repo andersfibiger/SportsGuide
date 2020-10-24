@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:SportsGuide/services/preference_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,11 +9,13 @@ import '../util/constants.dart';
 
 class TvGuideNotifier with ChangeNotifier {
   final _tvGuideService = GetIt.I<ITvGuideService>();
+  final _preferenceService = GetIt.I<IPreferenceService>();
   DateTime _selectedDate = DateTime.now();
   int previousPage = 1;
   List<TvProgramDto> _programs = [];
   bool didPickDate = false;
   bool _showSports = false;
+
 
   TvGuideNotifier() {
     fetchSports();
@@ -60,8 +63,7 @@ class TvGuideNotifier with ChangeNotifier {
       return;
     }
 
-    final prefs = await SharedPreferences.getInstance();
-    final chosenSports = prefs.getStringList(Constants.PREFS_SPORTS) ?? [];
+    final chosenSports = (await _preferenceService.getStrings(Constants.PREFS_SPORTS)) ?? [];
     if (chosenSports.isEmpty) {
       notifyListeners();
       return;

@@ -1,10 +1,12 @@
+import 'package:SportsGuide/services/preference_service.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get_it/get_it.dart';
 import '../util/constants.dart';
 
 class SportsNotifier with ChangeNotifier {
   List<String> _sports = [];
   List<String> get sports => _sports;
+  final preferenceService = GetIt.I<IPreferenceService>();
 
   SportsNotifier() {
     _fetchSports();
@@ -30,13 +32,12 @@ class SportsNotifier with ChangeNotifier {
   }
 
   Future saveSports() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList(Constants.PREFS_SPORTS, _sports);
+    await preferenceService.setStrings(Constants.PREFS_SPORTS, _sports);
   }
 
   Future _fetchSports() async {
-    final prefs = await SharedPreferences.getInstance();
-    _sports = prefs.getStringList(Constants.PREFS_SPORTS) ?? [];
+    _sports =
+        (await preferenceService.getStrings(Constants.PREFS_SPORTS)) ?? [];
     notifyListeners();
   }
 }

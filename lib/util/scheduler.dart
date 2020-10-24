@@ -1,5 +1,6 @@
 import 'package:SportsGuide/dtos/tv_program_dto.dart';
 import 'package:SportsGuide/services/notification_service.dart';
+import 'package:SportsGuide/services/preference_service.dart';
 import 'package:SportsGuide/services/tv_guide_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,11 +9,11 @@ import 'constants.dart';
 class Scheduler {
   final _tvguideService = GetIt.I<ITvGuideService>();
   final _notificationService = GetIt.I<INotificationService>();
+  final _preferenceService = GetIt.I<IPreferenceService>();
 
   Future checkForGames() async {
-    final chosenSports = (await SharedPreferences.getInstance())
-            .getStringList(Constants.PREFS_SPORTS) ??
-        [];
+    final chosenSports =
+        (await _preferenceService.getStrings(Constants.PREFS_SPORTS)) ?? [];
 
     final dayviews = await _tvguideService.getTvGuideByDate(DateTime.now());
     final programs = dayviews.map((channel) => channel.programs

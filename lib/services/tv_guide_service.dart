@@ -1,7 +1,8 @@
 import 'dart:convert';
+import 'package:SportsGuide/services/preference_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import '../models/channel.dart';
 import '../models/day_view.dart';
 import '../util/constants.dart';
@@ -14,6 +15,7 @@ abstract class ITvGuideService {
 
 class TvGuideService implements ITvGuideService {
   String _baseUrl;
+  final _preferenceService = GetIt.I<IPreferenceService>();
 
   TvGuideService() : _baseUrl = DotEnv().env['TV_GUIDE_API_URL'];
 
@@ -44,8 +46,7 @@ class TvGuideService implements ITvGuideService {
   }
 
   Future<String> _getChannels() async {
-    final prefs = await SharedPreferences.getInstance();
-    final channelIds = prefs.getStringList(Constants.PREFS_CHANNELS);
+    final channelIds = await _preferenceService.getStrings(Constants.PREFS_CHANNELS);
 
     if (channelIds == null || channelIds.isEmpty) {
       return '?ch=1';
