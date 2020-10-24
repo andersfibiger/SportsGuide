@@ -58,10 +58,8 @@ class _HomeState extends State<Home> {
       await Workmanager.registerPeriodicTask(
         Constants.PERIODIC_TASK_NAME,
         Constants.PERIODIC_TASK,
-        frequency: Duration(hours: 12)
+        frequency: Duration(hours: 1)
       );
-
-      // await Workmanager.registerOneOffTask('asdasdsd', Constants.PERIODIC_TASK);
     } else {
       await Workmanager.cancelByUniqueName(Constants.PERIODIC_TASK_NAME);
     }
