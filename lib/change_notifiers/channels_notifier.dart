@@ -10,7 +10,7 @@ class ChannelsNotifier extends ChangeNotifier {
   List<Channel> get savedChannels => _savedChannels;
   List<Channel> _channels = [];
   List<Channel> get channels => _channels;
-  final preferenceService = GetIt.I<IPreferenceService>();
+  final _preferenceService = GetIt.I<IPreferenceService>();
 
   ChannelsNotifier() {
     _getChannels();
@@ -43,11 +43,11 @@ class ChannelsNotifier extends ChangeNotifier {
 
   Future saveFavourites() async {
     final channelIds = _savedChannels.map((e) => e.id).toList();
-    await preferenceService.setStrings(Constants.PREFS_CHANNELS, channelIds);
+    await _preferenceService.setStrings(Constants.PREFS_CHANNELS, channelIds);
   }
 
   Future _fetchFavourites() async {
-    final channelIds = (await preferenceService.getStrings(Constants.PREFS_CHANNELS)) ?? [];
+    final channelIds = (await _preferenceService.getStrings(Constants.PREFS_CHANNELS)) ?? [];
     if (channelIds.isNotEmpty) {
       final tvGuideService = GetIt.I<ITvGuideService>();
       final mapped =

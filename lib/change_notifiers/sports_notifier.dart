@@ -6,7 +6,7 @@ import '../util/constants.dart';
 class SportsNotifier with ChangeNotifier {
   List<String> _sports = [];
   List<String> get sports => _sports;
-  final preferenceService = GetIt.I<IPreferenceService>();
+  final _preferenceService = GetIt.I<IPreferenceService>();
 
   SportsNotifier() {
     _fetchSports();
@@ -32,12 +32,12 @@ class SportsNotifier with ChangeNotifier {
   }
 
   Future saveSports() async {
-    await preferenceService.setStrings(Constants.PREFS_SPORTS, _sports);
+    await _preferenceService.setStrings(Constants.PREFS_SPORTS, _sports);
   }
 
   Future _fetchSports() async {
     _sports =
-        (await preferenceService.getStrings(Constants.PREFS_SPORTS)) ?? [];
+        (await _preferenceService.getStrings(Constants.PREFS_SPORTS)) ?? [];
     notifyListeners();
   }
 }
