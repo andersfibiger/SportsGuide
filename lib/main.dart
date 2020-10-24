@@ -13,29 +13,33 @@ import 'pages/home.dart';
 import 'util/get_it.dart';
 
 void callbackDispatcher() async {
-    await DotEnv().load('.env');
-    setupGetIt();
+  await DotEnv().load('.env');
+  setupGetIt();
 
-    Workmanager.executeTask((taskName, inputData) async {
-      switch (taskName) {
-        case Constants.PERIODIC_TASK:
-          await Scheduler().checkForGames();
-          break;
-        default:
-          break;
-      }
+  Workmanager.executeTask((taskName, inputData) async {
+    switch (taskName) {
+      case Constants.PERIODIC_TASK:
+        if (_isNotNight()) await Scheduler().checkForGames();
+        break;
+      default:
+        break;
+    }
 
-      print('done calling');
-      return Future.value(true);
-    });
-  }
+    return Future.value(true);
+  });
+}
+
+bool _isNotNight() {
+  final currentTime = DateTime.now();
+  return 11 <= currentTime.hour && currentTime.hour <= 21;
+}
 
 Future main() async {
   await DotEnv().load('.env');
   setupGetIt();
   await GetIt.I<INotificationService>().init();
-  await Workmanager.initialize(callbackDispatcher, isInDebugMode: true);
-  
+  await Workmanager.initialize(callbackDispatcher);
+
   runApp(
     MultiProvider(
       providers: [

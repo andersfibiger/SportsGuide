@@ -2,7 +2,6 @@ import 'package:SportsGuide/services/preference_service.dart';
 import 'package:SportsGuide/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 import 'channels/channels_list.dart';
 import 'sports/sports_list.dart';
@@ -17,8 +16,7 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   bool _sendNotifications = false;
   PageController _pageController;
-    final _preferenceService = GetIt.I<IPreferenceService>();
-
+  final _preferenceService = GetIt.I<IPreferenceService>();
 
   @override
   void initState() {
@@ -58,15 +56,15 @@ class _HomeState extends State<Home> {
       await Workmanager.registerPeriodicTask(
         Constants.PERIODIC_TASK_NAME,
         Constants.PERIODIC_TASK,
-        frequency: Duration(hours: 1)
+        frequency: Duration(hours: 1),
+        initialDelay: Duration(hours: 1),
       );
     } else {
       await Workmanager.cancelByUniqueName(Constants.PERIODIC_TASK_NAME);
     }
   }
 
-  final _titles = <String>['Upcoming sports', 'Channels', 'Sports'];
-
+  static final _titles = <String>['Upcoming sports', 'Channels', 'Sports'];
   static final _widgets = <Widget>[TvGuideList(), ChannelsList(), SportsList()];
 
   @override
@@ -76,12 +74,13 @@ class _HomeState extends State<Home> {
         title: Text(_titles.elementAt(_currentIndex)),
         actions: [
           IconButton(
-              icon: Icon(
-                _sendNotifications
-                    ? Icons.notifications_on
-                    : Icons.notifications_off,
-              ),
-              onPressed: _onNotificationChange),
+            icon: Icon(
+              _sendNotifications ? Icons.notifications_on : Icons.notifications_off,
+              color: Theme.of(context).accentColor,
+            ),
+            onPressed: _onNotificationChange,
+            tooltip: 'Check for upcomming games every hour',
+          ),
         ],
       ),
       body: PageView(
