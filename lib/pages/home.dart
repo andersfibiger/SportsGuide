@@ -1,3 +1,4 @@
+import 'package:SportsGuide/routing/routes.dart';
 import 'package:SportsGuide/services/preference_service.dart';
 import 'package:SportsGuide/util/constants.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _HomeState extends State<Home> {
   Future<void> _initPreferences() async {
     final value = await _preferenceService.getBool(Constants.PREFS_SEND_NOTIFICATIONS);
     setState(() {
-      _sendNotifications = value;
+      _sendNotifications = value ?? false;
     });
   }
 
@@ -80,6 +81,13 @@ class _HomeState extends State<Home> {
             ),
             onPressed: _onNotificationChange,
             tooltip: 'Check for upcomming games every hour',
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.settings,
+              color: Theme.of(context).accentColor,
+            ),
+            onPressed: () async => await Navigator.of(context).pushNamed(Routes.PROFILE),
           ),
         ],
       ),

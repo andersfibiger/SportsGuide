@@ -1,3 +1,5 @@
+import 'package:SportsGuide/routing/route_generator.dart';
+import 'package:SportsGuide/routing/routes.dart';
 import 'package:SportsGuide/services/notification_service.dart';
 import 'package:SportsGuide/util/constants.dart';
 import 'package:SportsGuide/util/scheduler.dart';
@@ -9,6 +11,7 @@ import 'package:workmanager/workmanager.dart';
 import 'change_notifiers/channels_notifier.dart';
 import 'change_notifiers/sports_notifier.dart';
 import 'change_notifiers/tv_guide_notifier.dart';
+import 'change_notifiers/settings_notifier.dart';
 import 'pages/home.dart';
 import 'util/get_it.dart';
 
@@ -46,6 +49,7 @@ Future main() async {
         ChangeNotifierProvider(create: (_) => ChannelsNotifier()),
         ChangeNotifierProvider(create: (_) => TvGuideNotifier()),
         ChangeNotifierProvider(create: (_) => SportsNotifier()),
+        ChangeNotifierProvider(create: (_) => SettingsNotifier()),
       ],
       child: MyApp(),
     ),
@@ -58,6 +62,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Sports guide',
       debugShowCheckedModeBanner: false,
+      onGenerateRoute: onGenerateRoute,
+      initialRoute: Routes.HOME,
       theme: ThemeData.from(
         colorScheme: ColorScheme(
           background: Color(0xFFe5e5e5),

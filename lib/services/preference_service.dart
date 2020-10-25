@@ -5,6 +5,8 @@ abstract class IPreferenceService {
   Future<void> setStrings(String key, List<String> values);
   Future<bool> getBool(String key);
   Future<void> setBool(String key, bool value);
+  Future<int> getInt(String key);
+  Future<void> setInt(String key, int value);
 }
 
 class PreferenceService implements IPreferenceService {
@@ -31,5 +33,17 @@ class PreferenceService implements IPreferenceService {
   Future<void> setStrings(String key, List<String> values) async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.setStringList(key, values);
+  }
+
+  @override
+  Future<int> getInt(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(key);
+  }
+
+  @override
+  Future<void> setInt(String key, int value) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.setInt(key, value);
   }
 }
