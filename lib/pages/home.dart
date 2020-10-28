@@ -54,11 +54,15 @@ class _HomeState extends State<Home> {
     await _preferenceService.setBool(Constants.PREFS_SEND_NOTIFICATIONS, _sendNotifications);
 
     if (_sendNotifications) {
+      final interval = await _preferenceService.getInt(Constants.PREFS_NOTIFICATION_INTERVAL);
+      final initialDelay = await _preferenceService.getTimeOfDay(Constants.PREFS_INTERVAL_START);
       await Workmanager.registerPeriodicTask(
         Constants.PERIODIC_TASK_NAME,
         Constants.PERIODIC_TASK,
-        frequency: Duration(hours: 1),
-        initialDelay: Duration(hours: 1),
+        frequency: Duration(hours: interval ?? 1),
+        initialDelay: initialDelay != null
+            ? Duration(hours: initialDelay.hour, minutes: initialDelay.minute)
+            : Duration(minutes: 15),
       );
     } else {
       await Workmanager.cancelByUniqueName(Constants.PERIODIC_TASK_NAME);

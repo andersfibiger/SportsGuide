@@ -1,12 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class IPreferenceService {
   Future<List<String>> getStrings(String key);
-  Future<void> setStrings(String key, List<String> values);
+  Future<bool> setStrings(String key, List<String> values);
   Future<bool> getBool(String key);
-  Future<void> setBool(String key, bool value);
+  Future<bool> setBool(String key, bool value);
   Future<int> getInt(String key);
-  Future<void> setInt(String key, int value);
+  Future<bool> setInt(String key, int value);
+  Future<TimeOfDay> getTimeOfDay(String key);
+  Future<void> setTimeOfDay(String key, TimeOfDay value);
 }
 
 class PreferenceService implements IPreferenceService {
@@ -24,13 +27,13 @@ class PreferenceService implements IPreferenceService {
   }
 
   @override
-  Future<void> setBool(String key, bool value) async {
+  Future<bool> setBool(String key, bool value) async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.setBool(key, value);
   }
 
   @override
-  Future<void> setStrings(String key, List<String> values) async {
+  Future<bool> setStrings(String key, List<String> values) async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.setStringList(key, values);
   }
@@ -42,8 +45,28 @@ class PreferenceService implements IPreferenceService {
   }
 
   @override
-  Future<void> setInt(String key, int value) async {
+  Future<bool> setInt(String key, int value) async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.setInt(key, value);
+  }
+
+  @override
+  Future<TimeOfDay> getTimeOfDay(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    final hour = await getInt('$key-hour');
+    final minute = await getInt('$key-minute');
+
+    if (hour == null && minute == null)
+      return null;
+
+    return TimeOfDay(hour: hour, minute: minute);
+  }
+
+  @override
+  Future<void> setTimeOfDay(String key, TimeOfDay value) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await setInt('$key-hour', value.hour);
+    await setInt('$key-minute', value.minute);
   }
 }
