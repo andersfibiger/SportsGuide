@@ -64,7 +64,7 @@ class Profile extends StatelessWidget {
       case 24:
         return 'Check for sports once a day';
       default:
-        return 'Checks for sports every $interval hour';
+        return 'Checks for sports every ${interval ?? 1} hour';
     }
   }
 
